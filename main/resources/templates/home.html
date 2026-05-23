@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MyShop - Kacper Bieniek</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <span class="title">MyShop</span>
+
+        <a th:href="@{/cart}" class="cart-ico">
+            <div>
+                <span>Koszyk</span>
+                <span th:text="'(' + ${cartTotalQty} + ')'">(0)</span>
+                <span th:text="${cartTotalPrice}">0</span>
+                <span>zł</span>
+            </div>
+        </a>
+    </header>
+
+    <div class="main-content">
+        <div class="item" th:each="item : ${items}">
+            <p class="item-name" th:text="${item.name}">
+                Ołówek
+            </p>
+
+            <img th:src="${item.imgURL}">
+
+            <div>
+                <span>Cena: </span>
+                <span th:text="${item.price}">2.50</span>
+                <span>zł</span>
+            </div>
+
+            <a th:href="@{/cart/add(name=${item.name})}" class="add-btn">Dodaj</a>
+        </div>
+    </div>
+</body>
+</html>
