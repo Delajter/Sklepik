@@ -1,28 +1,31 @@
 package com.kacper.myshop.controller;
 
 import com.kacper.myshop.model.Item;
-import com.kacper.myshop.service.ItemService;
+import com.kacper.myshop.repository.ItemRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 
-    private final ItemService itemService;
+    private final ItemRepository itemRepository;
 
-    public AdminController(ItemService itemService) {
-        this.itemService = itemService;
+    public AdminController(ItemRepository itemRepository) {
+        this.itemRepository = itemRepository;
     }
 
-    @GetMapping("/admin")
+    @GetMapping("")
     public String adminPage() {
-        return "adminview/addItem";
+        return "adminview/additem";
     }
 
-    @PostMapping("/admin")
+    @PostMapping("/add")
     public String addItem(Item item) {
-        itemService.addItem(item);
+        // Zapisanie obiektu przesłanego z formularza HTML bezpośrednio do bazy danych
+        itemRepository.save(item);
         return "redirect:/";
     }
 }
