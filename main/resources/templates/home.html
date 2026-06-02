@@ -8,18 +8,7 @@
 </head>
 
 <body>
-    <header>
-        <span class="title">MyShop</span>
-
-        <a th:href="@{/cart}" class="cart-ico">
-            <div>
-                <span>Koszyk</span>
-                <span th:text="'(' + ${cartTotalQty} + ')'">(0)</span>
-                <span th:text="${cartTotalPrice}">0</span>
-                <span>zł</span>
-            </div>
-        </a>
-    </header>
+    <header th:replace="~{fragments/header :: ShopHeader}"></header>
 
     <div class="main-content">
         <div class="item" th:each="item : ${items}">
