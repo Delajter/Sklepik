@@ -1,39 +1,39 @@
 package com.kacper.myshop.model;
 
 import java.math.BigDecimal;
+import lombok.Getter;
 
+@Getter
 public class CartItem {
     private Item item;
-    private int quantity;
+    private int counter;
+    private BigDecimal price;
 
-    public CartItem() {
-    }
-
-    public CartItem(Item item, int quantity) {
+    public CartItem(Item item) {
         this.item = item;
-        this.quantity = quantity;
+        this.counter = 1;
+        this.price = item.getPrice();
     }
 
-    public Item getItem() {
-        return item;
+    public void increaseCounter() {
+        this.counter++;
+        recalculate();
     }
 
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public BigDecimal getSum() {
-        if (item == null || item.getPrice() == null) {
-            return BigDecimal.ZERO;
+    public void decreaseCounter() {
+        if (this.counter > 0) {
+            this.counter--;
+            recalculate();
         }
-        return item.getPrice().multiply(BigDecimal.valueOf(quantity));
+    }
+
+    public boolean hasZeroItems() {
+        return this.counter == 0;
+    }
+
+    private void recalculate() {
+        if (this.item != null && this.item.getPrice() != null) {
+            this.price = this.item.getPrice().multiply(new BigDecimal(this.counter));
+        }
     }
 }

@@ -18,7 +18,8 @@ public class Item {
     private BigDecimal price;
     private String imgURL;
 
-    public Item() {}
+    public Item() {
+    }
 
     public Item(Long id, String name, BigDecimal price, String imgURL) {
         this.id = id;
@@ -63,5 +64,15 @@ public class Item {
 
     public void setImgURL(String imgURL) {
         this.imgURL = imgURL;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", imgURL='" + imgURL + '\'' +
+                '}';
     }
 }

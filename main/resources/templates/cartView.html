@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>MyShop - Kacper Bieniek</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 </head>
+
 <body>
     <header th:replace="~{fragments/header :: ShopHeader}"></header>
 
     <div class="main-content">
         <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
-            <table cellspacing="0" th:if="${not #lists.isEmpty(cart.items)}">
+            <table cellspacing="0" th:if="${not #lists.isEmpty(cart.cartItems)}">
                 <tr>
                     <th style="width: 30px;">No.</th>
                     <th style="width: 50px;"></th>
@@ -19,7 +21,7 @@
                     <th>Suma</th>
                     <th style="width: 30px;"></th>
                 </tr>
-                <tr th:each="cartItem, iter : ${cart.items}">
+                <tr th:each="cartItem, iter : ${cart.cartItems}">
                     <td th:text="${iter.count}">1</td>
                     <td>
                         <img th:src="${cartItem.item.imgURL}">
@@ -27,26 +29,28 @@
                     <td th:text="${cartItem.item.name}">Ołówek</td>
                     <td style="display: flex; padding-top: 10px">
                         <a class="mbtn" th:href="@{/cart/decrease(name=${cartItem.item.name})}">-</a>
-                        <p th:text="${cartItem.quantity}">1</p>
+                        <p th:text="${cartItem.counter}">1</p>
                         <a class="mbtn" th:href="@{/cart/increase(name=${cartItem.item.name})}">+</a>
                     </td>
-                    <td><span th:text="${cartItem.getSum()}">2.50</span> zł</td>
+                    <td><span th:text="${cartItem.price}">2.50</span> zł</td>
                     <td>
                         <a class="mbtn" th:href="@{/cart/remove(name=${cartItem.item.name})}">X</a>
                     </td>
                 </tr>
             </table>
 
-            <div th:if="${#lists.isEmpty(cart.items)}" style="text-align: center; margin: 20px;">
+            <div th:if="${#lists.isEmpty(cart.cartItems)}" style="text-align: center; margin: 20px;">
                 <h2>Twój koszyk jest pusty.</h2>
-                <a th:href="@{/}" class="add-btn" style="display: inline-block; width: auto; padding: 10px 20px;">Wróć do sklepu</a>
+                <a th:href="@{/}" class="add-btn" style="display: inline-block; width: auto; padding: 10px 20px;">Wróć
+                    do sklepu</a>
             </div>
 
-            <div class="summary" th:if="${not #lists.isEmpty(cart.items)}">
-                <p><span>Do zapłaty </span><span th:text="${cart.getTotalPrice()}">10</span> zł</p>
+            <div class="summary" th:if="${not #lists.isEmpty(cart.cartItems)}">
+                <p><span>Do zapłaty </span><span th:text="${cart.sum}">10</span> zł</p>
             </div>
-            <a th:href="@{/summary}" class="add-btn" th:if="${not #lists.isEmpty(cart.items)}">Dalej</a>
+            <a th:href="@{/summary}" class="add-btn" th:if="${not #lists.isEmpty(cart.cartItems)}">Dalej</a>
         </div>
     </div>
 </body>
+
 </html>

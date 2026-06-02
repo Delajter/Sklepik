@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>MyShop</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 </head>
+
 <body>
     <header th:replace="~{fragments/header :: ShopHeader}"></header>
 
     <div class="main-content">
         <div th:if="${infoMsg}" class="infoMsg" th:text="${infoMsg}" style="margin-bottom: 20px;"></div>
 
-        <div style="width: 100%; display: flex; flex-direction: column; align-items: center;" th:if="${not #lists.isEmpty(cart.items)}">
+        <div style="width: 100%; display: flex; flex-direction: column; align-items: center;"
+            th:if="${not #lists.isEmpty(cart.cartItems)}">
             <table cellspacing="0" style="border: 0px">
-                <tr th:each="cartItem, iter : ${cart.items}">
+                <tr th:each="cartItem, iter : ${cart.cartItems}">
                     <td th:text="${iter.count}">1</td>
                     <td>
                         <img th:src="${cartItem.item.imgURL}">
                     </td>
                     <td th:text="${cartItem.item.name}">Ołówek</td>
                     <td style="display: flex; padding-top: 10px">
-                        <p th:text="${cartItem.quantity}">1</p>
+                        <p th:text="${cartItem.counter}">1</p>
                     </td>
-                    <td><span th:text="${cartItem.getSum()}">2</span> zł</td>
+                    <td><span th:text="${cartItem.price}">2</span> zł</td>
                 </tr>
             </table>
 
             <div class="summary">
-                <p><span>Do zapłaty </span><span th:text="${cart.getTotalPrice()}">10</span> zł</p>
+                <p><span>Do zapłaty </span><span th:text="${cart.sum}">10</span> zł</p>
             </div>
 
             <div class="summary" style="width: 80%; margin-top: 20px;">
@@ -47,10 +50,13 @@
             </div>
         </div>
 
-        <div th:if="${#lists.isEmpty(cart.items) && infoMsg == null}" style="text-align: center; margin: 20px; width: 100%;">
+        <div th:if="${#lists.isEmpty(cart.cartItems) && infoMsg == null}"
+            style="text-align: center; margin: 20px; width: 100%;">
             <h2>Twój koszyk jest pusty.</h2>
-            <a th:href="@{/}" class="add-btn" style="display: inline-block; width: auto; padding: 10px 20px;">Wróć do sklepu</a>
+            <a th:href="@{/}" class="add-btn" style="display: inline-block; width: auto; padding: 10px 20px;">Wróć do
+                sklepu</a>
         </div>
     </div>
 </body>
+
 </html>

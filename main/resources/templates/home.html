@@ -24,7 +24,7 @@
                 <span>zł</span>
             </div>
 
-            <a th:href="@{/cart/add(name=${item.name})}" class="add-btn">Dodaj</a>
+            <a th:href="@{/addItemToCart/{id}(id=${item.id})}" class="add-btn">Dodaj</a>
         </div>
     </div>
 </body>
