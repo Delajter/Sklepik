@@ -36,4 +36,8 @@ public class CartItem {
             this.price = this.item.getPrice().multiply(new BigDecimal(this.counter));
         }
     }
+
+    public boolean isEquals(Item item) {
+        return this.item.getId().equals(item.getId());
+    }
 }
