@@ -62,6 +62,10 @@ public class Item {
         return imgURL;
     }
 
+    public String getImgUrl() {
+        return imgURL;
+    }
+
     public void setImgURL(String imgURL) {
         this.imgURL = imgURL;
     }

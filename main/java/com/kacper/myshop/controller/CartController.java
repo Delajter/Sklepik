@@ -79,7 +79,7 @@ public class CartController {
         
         cart.clear();
         
-        model.addAttribute("infoMsg", "Dziękujemy " + firstName + " " + lastName + "- Zamówienie zostało pomyślnie złożone może je wyślemy.");
+        model.addAttribute("infoMsg", "Dziękujemy " + firstName + " " + lastName + "- Zamówienie zostało pomyślnie złożone może je wyślemy.📨🙀");
         model.addAttribute("cart", cart);
         
         return "summary";

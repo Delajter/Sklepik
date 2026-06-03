@@ -21,20 +21,20 @@
                     <th>Suma</th>
                     <th style="width: 30px;"></th>
                 </tr>
-                <tr th:each="cartItem, iter : ${cart.cartItems}">
-                    <td th:text="${iter.count}">1</td>
+                <tr th:each="cartItem, stat : ${cart.cartItems}">
+                    <td th:text="${stat.count}">1</td>
                     <td>
-                        <img th:src="${cartItem.item.imgURL}">
+                        <img th:src="${cartItem.item.imgUrl}">
                     </td>
                     <td th:text="${cartItem.item.name}">Ołówek</td>
-                    <td style="display: flex; padding-top: 10px">
-                        <a class="mbtn" th:href="@{/cart/decrease(name=${cartItem.item.name})}">-</a>
+                    <td style="display: flex; padding-top: 10px" class="quantity-control">
+                        <a class="mbtn btn-minus" th:href="@{/cart/decrease(name=${cartItem.item.name})}">-</a>
                         <p th:text="${cartItem.counter}">1</p>
-                        <a class="mbtn" th:href="@{/cart/increase(name=${cartItem.item.name})}">+</a>
+                        <a class="mbtn btn-plus" th:href="@{/cart/increase(name=${cartItem.item.name})}">+</a>
                     </td>
                     <td><span th:text="${cartItem.price}">2.50</span> zł</td>
                     <td>
-                        <a class="mbtn" th:href="@{/cart/remove(name=${cartItem.item.name})}">X</a>
+                        <a class="mbtn btn-remove" th:href="@{/cart/remove(name=${cartItem.item.name})}">X</a>
                     </td>
                 </tr>
             </table>
@@ -48,7 +48,7 @@
             <div class="summary" th:if="${not #lists.isEmpty(cart.cartItems)}">
                 <p><span>Do zapłaty </span><span th:text="${cart.sum}">10</span> zł</p>
             </div>
-            <a th:href="@{/summary}" class="add-btn" th:if="${not #lists.isEmpty(cart.cartItems)}">Dalej</a>
+            <a th:href="@{/summary}" class="add-btn btn-submit" th:if="${not #lists.isEmpty(cart.cartItems)}">Dalej</a>
         </div>
     </div>
 </body>
