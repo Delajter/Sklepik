@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 import lombok.Getter;
 
@@ -49,6 +48,23 @@ public class Cart {
     public void removeItemCompletely(Item item) {
         Predicate<CartItem> matchesItem = ci -> ci.getItem().getId().equals(item.getId());
         cartItems.removeIf(matchesItem);
+        recalculatePriceAndCounter();
+    }
+
+    public void decreaseItem(Item item) {
+        Optional<CartItem> cartItemOpt = getCartItemByItem(item);
+        if (cartItemOpt.isPresent()) {
+            CartItem cartItem = cartItemOpt.get();
+            cartItem.decreaseCounter();
+            if (cartItem.hasZeroItems()) {
+                removeAllItems(item);
+            }
+        }
+        recalculatePriceAndCounter();
+    }
+
+    public void removeAllItems(Item item) {
+        cartItems.removeIf(i -> i.isEquals(item));
         recalculatePriceAndCounter();
     }
 

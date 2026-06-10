@@ -28,13 +28,13 @@
                     </td>
                     <td th:text="${cartItem.item.name}">Ołówek</td>
                     <td style="display: flex; padding-top: 10px" class="quantity-control">
-                        <a class="mbtn btn-minus" th:href="@{/cart/decrease(name=${cartItem.item.name})}">-</a>
+                        <a class="mbtn" th:href="@{'/order/decrease/' + ${cartItem.item.id}}">-</a>
                         <p th:text="${cartItem.counter}">1</p>
-                        <a class="mbtn btn-plus" th:href="@{/cart/increase(name=${cartItem.item.name})}">+</a>
+                        <a class="mbtn" th:href="@{'/order/increase/' + ${cartItem.item.id}}">+</a>
                     </td>
                     <td><span th:text="${cartItem.price}">2.50</span> zł</td>
                     <td>
-                        <a class="mbtn btn-remove" th:href="@{/cart/remove(name=${cartItem.item.name})}">X</a>
+                        <a class="mbtn" th:href="@{'/order/remove/' + ${cartItem.item.id}}">X</a>
                     </td>
                 </tr>
             </table>

@@ -24,7 +24,6 @@ public class AdminController {
 
     @PostMapping("/add")
     public String addItem(Item item) {
-        // Zapisanie obiektu przesłanego z formularza HTML bezpośrednio do bazy danych
         itemRepository.save(item);
         return "redirect:/";
     }

@@ -1,36 +1,37 @@
 package com.kacper.myshop.controller;
 
 import com.kacper.myshop.Cart;
-import com.kacper.myshop.model.Item;
-import com.kacper.myshop.repository.ItemRepository;
+import com.kacper.myshop.service.CartService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class HomeController {
 
-    private final ItemRepository itemRepository;
-    private final Cart cart;
+    private final CartService cartService;
 
-    public HomeController(ItemRepository itemRepository, Cart cart) {
-        this.itemRepository = itemRepository;
-        this.cart = cart;
+    public HomeController(CartService cartService) {
+        this.cartService = cartService;
+    }
+
+    @ModelAttribute("cart")
+    public Cart getCart() {
+        return cartService.getCart();
     }
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("items", itemRepository.findAll());
-        model.addAttribute("cart", cart);
+        model.addAttribute("items", cartService.getAllItems());
         return "home";
     }
 
-    @GetMapping("/addItemToCart/{id}")
-    public String addItemToCart(@PathVariable Long id) {
-        Item item = itemRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Nieprawidłowe ID produktu: " + id));
-        cart.addItem(item);
-        return "redirect:/";
+    @GetMapping("/add/{itemId}")
+    public String addItemToCart(@PathVariable("itemId") Long itemId, Model model) {
+        cartService.addItemToCart(itemId);
+        model.addAttribute("items", cartService.getAllItems());
+        return "home";
     }
 }
