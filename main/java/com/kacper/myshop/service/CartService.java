@@ -1,6 +1,7 @@
 package com.kacper.myshop.service;
 
 import com.kacper.myshop.Cart;
+import com.kacper.myshop.ItemOperation;
 import com.kacper.myshop.model.Item;
 import com.kacper.myshop.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,24 +25,23 @@ public class CartService {
         return itemRepository.findAll();
     }
 
-    public void addItemToCart(Long itemId) {
-        Optional<Item> item = itemRepository.findById(itemId);
-        if (item.isPresent()) {
-            cart.addItem(item.get());
-        }
-    }
-
-    public void decreaseItem(Long itemId) {
-        Optional<Item> item = itemRepository.findById(itemId);
-        if (item.isPresent()) {
-            cart.decreaseItem(item.get());
-        }
-    }
-
-    public void removeAllItemsFromCart(Long itemId) {
-        Optional<Item> item = itemRepository.findById(itemId);
-        if (item.isPresent()) {
-            cart.removeAllItems(item.get());
+    public void executeOperation(long itemId, ItemOperation operation) {
+        Optional<Item> oItem = itemRepository.findById(itemId);
+        
+        if (oItem.isPresent()) {
+            Item item = oItem.get();
+            
+            switch (operation) {
+                case INCREASE:
+                    cart.addItem(item);
+                    break;
+                case DECREASE:
+                    cart.decreaseItem(item);
+                    break;
+                case REMOVE:
+                    cart.removeAllItems(item);
+                    break;
+            }
         }
     }
 

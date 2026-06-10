@@ -1,6 +1,7 @@
 package com.kacper.myshop.controller;
 
 import com.kacper.myshop.Cart;
+import com.kacper.myshop.ItemOperation;
 import com.kacper.myshop.service.CartService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,9 +30,8 @@ public class HomeController {
     }
 
     @GetMapping("/add/{itemId}")
-    public String addItemToCart(@PathVariable("itemId") Long itemId, Model model) {
-        cartService.addItemToCart(itemId);
-        model.addAttribute("items", cartService.getAllItems());
-        return "home";
+    public String addItemToCart(@PathVariable("itemId") Long itemId) {
+        cartService.executeOperation(itemId, ItemOperation.INCREASE);
+        return "redirect:/";
     }
 }
