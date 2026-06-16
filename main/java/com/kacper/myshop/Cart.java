@@ -73,6 +73,12 @@ public class Cart {
         recalculatePriceAndCounter();
     }
 
+    public void clearCart() {
+        this.cartItems.clear();
+        this.sum = BigDecimal.ZERO;
+        this.counter = 0;
+    }
+
     private void recalculatePriceAndCounter() {
         this.sum = cartItems.stream()
                 .map(CartItem::getPrice)

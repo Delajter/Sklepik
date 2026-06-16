@@ -1,13 +1,15 @@
 package com.kacper.myshop.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
+import jakarta.persistence.*;
 import java.math.BigDecimal;
+import lombok.*;
 
 @Entity
+@Table(name = "item")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Item {
 
     @Id
@@ -16,67 +18,22 @@ public class Item {
 
     private String name;
     private BigDecimal price;
+
+    @Column(name = "imgurl")
     private String imgURL;
 
-    public Item() {
-    }
-
-    public Item(Long id, String name, BigDecimal price, String imgURL) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.imgURL = imgURL;
-    }
-
+    // Konstruktor bez pola ID
     public Item(String name, BigDecimal price, String imgURL) {
         this.name = name;
         this.price = price;
         this.imgURL = imgURL;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public String getImgURL() {
-        return imgURL;
-    }
-
     public String getImgUrl() {
         return imgURL;
     }
 
-    public void setImgURL(String imgURL) {
-        this.imgURL = imgURL;
-    }
-
-    @Override
-    public String toString() {
-        return "Item{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", imgURL='" + imgURL + '\'' +
-                '}';
+    public String getImgURL() {
+        return imgURL;
     }
 }

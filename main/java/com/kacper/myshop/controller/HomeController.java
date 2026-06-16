@@ -23,7 +23,7 @@ public class HomeController {
         return cartService.getCart();
     }
 
-    @GetMapping("/")
+    @GetMapping({"/", "/home"})
     public String home(Model model) {
         model.addAttribute("items", cartService.getAllItems());
         return "home";

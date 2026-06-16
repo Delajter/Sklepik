@@ -1,8 +1,10 @@
 package com.kacper.myshop.controller;
 
 import com.kacper.myshop.Cart;
+import com.kacper.myshop.dto.OrderDto;
 import com.kacper.myshop.model.Item;
 import com.kacper.myshop.service.ItemService;
+import com.kacper.myshop.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +16,12 @@ public class CartController {
 
     private final ItemService itemService;
     private final Cart cart;
+    private final OrderService orderService;
 
-    public CartController(ItemService itemService, Cart cart) {
+    public CartController(ItemService itemService, Cart cart, OrderService orderService) {
         this.itemService = itemService;
         this.cart = cart;
+        this.orderService = orderService;
     }
 
     @GetMapping("/cart")
@@ -77,7 +81,14 @@ public class CartController {
             @RequestParam("city") String city,
             Model model) {
         
-        cart.clear();
+        OrderDto orderDto = OrderDto.builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .address(address)
+                .postCode(postCode)
+                .city(city)
+                .build();
+        orderService.saveOrder(orderDto);
         
         model.addAttribute("infoMsg", "Dziękujemy " + firstName + " " + lastName + "- Zamówienie zostało pomyślnie złożone może je wyślemy.📨🙀");
         model.addAttribute("cart", cart);
